@@ -1,0 +1,19 @@
+data.xml
+data1.xml
+bpa_data.xml
+
+.venv/
+__pycache__
+
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
