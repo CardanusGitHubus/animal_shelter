@@ -1,8 +1,9 @@
-import datetime
-from email.policy import default
+# import datetime
+# from email.policy import default
 
 from django.db import models
-from django.utils import timezone
+# from django.utils import timezone
+from PIL import Image
 
 
 class Pet(models.Model):
@@ -29,6 +30,8 @@ class Pet(models.Model):
         default=CAT,
     )
     name = models.CharField('Имя', max_length=127)
+    photo = models.ImageField(
+        'Фото', upload_to='photos', default='photos/default_photo.jpg')
     gender = models.CharField(
         verbose_name='Пол',
         max_length=6,
@@ -39,5 +42,12 @@ class Pet(models.Model):
     age = models.CharField('Возраст', max_length=127)
     description = models.TextField('Описание')
     adoption_date = models.DateTimeField('Дата поступления')
-    photo = models.ImageField(
-        'Фото', upload_to='photos', default='photos/default_photo.jpg')
+
+    def save(self):
+        super().save()
+        img = Image.open(self.photo.path)
+        # resize it
+        if img.height > 300 or img.width > 300:
+            output_size = (300, 300)
+            img.thumbnail(output_size)
+            img.save(self.photo.path)
